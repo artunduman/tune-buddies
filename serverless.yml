@@ -14,6 +14,7 @@ provider:
 
 plugins:
   - serverless-google-cloudfunctions
+  - serverless-python-requirements
 package:
   exclude:
     - node_modules/**
