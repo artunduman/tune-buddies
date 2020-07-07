@@ -1,0 +1,17 @@
+Resources:
+  FormsTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: user-forms
+      AttributeDefinitions:
+        - AttributeName: userId
+          AttributeType: S
+        - AttributeName: formId  # ID for the contest form
+          AttributeType: S
+      KeySchema:
+        - AttributeName: userId
+          KeyType: HASH
+        - AttributeName: formId
+          KeyType: RANGE
+      # Set the capacity to auto-scale
+      BillingMode: PAY_PER_REQUEST
