@@ -1,45 +1,55 @@
 service: tune-buddies
 
 provider:
-  name: google
-  stage: dev
-  runtime: python37
-  region: us-central1
-  project: music-meter
-  # The GCF credentials can be a little tricky to set up. Luckily we've documented this for you here:
-  # https://serverless.com/framework/docs/providers/google/guide/credentials/
-  #
-  # the path to the credentials file needs to be absolute
-  credentials: ~/.gcloud/music-meter-cd5b9686106d.json
+  name: aws
+  runtime: python3.7
 
-plugins:
-  - serverless-google-cloudfunctions
-  - serverless-python-requirements
+  # TODO: Move to a fetch-spotify-access-token local role.
+#  iamRoleStatements:
+  # TODO add DynamoDB roles,
+
 package:
   exclude:
-    - node_modules/**
-    - .gitignore
-    - .git/**
+    - "**"
+  include:
+    - tune_buddies/**
 
 functions:
-  first:
-    handler: http
+  fetch-spotify-access-token:
+    description: Obtain a spotify access token given a spotify refresh token
+    handler: tune_buddies/serverless/fetch_spotify_access_token.handler
+    environment:
+      SPOTIFY_CLIENT_ID: ${self:custom.spotifyClientId}
+      SPOTIFY_CLIENT_SECRET: CHANGEME
     events:
-      - http: path
-  # NOTE: the following uses an "event" event (pubSub event in this case).
-  # Please create the corresponding resources in the Google Cloud
-  # before deploying this service through Serverless
-  #second:
-  #  handler: event
-  #  events:
-  #    - event:
-  #        eventType: providers/cloud.pubsub/eventTypes/topic.publish
-  #        resource: projects/*/topics/my-topic
-# you can define resources, templates etc. the same way you would in a
-# Google Cloud deployment configuration
-#resources:
-#  resources:
-#    - type: storage.v1.bucket
-#      name: my-serverless-service-bucket
-#  imports:
-#    - path: my_template.jinja
+      - http:
+          path: /accesstoken
+          method: post # to match POST https://accounts.spotify.com/api/token
+          cors: true
+
+  fetch-spotify-refresh-token:
+    description: Obtain a spotify refresh token given a spotify auth token
+    handler: tune_buddies/serverless/fetch_spotify_refresh_token.handler
+    environment:
+      SPOTIFY_CLIENT_ID: ${self:custom.spotifyClientId}
+      SPOTIFY_CLIENT_SECRET: CHANGEME
+    events:
+      - http:
+          path: /refreshtoken
+          method: post # to match POST https://accounts.spotify.com/api/token
+          cors: true
+
+plugins:
+  - serverless-python-requirements
+#  - serverless-domain-manager
+  - serverless-finch
+custom:
+  spotifyClientId: CHANGEME
+#  customDomain:
+#    domainName: api.tunebuddies.com
+##    certificateName: '*.tunebuddies.com'
+#    createRoute53Record: true
+#    stage: ${self:provider.stage}
+
+resources:
+  - ${file(tune_buddies/resources/dynamodb-table.yml)}
