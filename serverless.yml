@@ -41,15 +41,15 @@ functions:
 
 plugins:
   - serverless-python-requirements
-#  - serverless-domain-manager
+  - serverless-domain-manager
   - serverless-finch
 custom:
   spotifyClientId: CHANGEME
-#  customDomain:
-#    domainName: api.tunebuddies.com
-##    certificateName: '*.tunebuddies.com'
-#    createRoute53Record: true
-#    stage: ${self:provider.stage}
+  customDomain:
+    domainName: api.tunebunnies.com
+    certificateName: '*.tunebunnies.com'
+    createRoute53Record: true
+    stage: ${self:provider.stage}
 
 resources:
   - ${file(tune_buddies/resources/dynamodb-table.yml)}
