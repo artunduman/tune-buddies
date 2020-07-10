@@ -1,14 +1,17 @@
 import React from 'react';
 import logo from './logo.svg';
-import { Counter } from './features/counter/Counter';
 import './App.css';
+import {ConnectedRouter} from "connected-react-router";
+import { Route } from 'react-router-dom';
+// import Home from "./scenes/Home";
+import {SpotifyButton} from "./components/buttons";
 
 function App() {
   return (
     <div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
-        <Counter />
+        <SpotifyButton>Login with Spotify</SpotifyButton>
         <p>
           Edit <code>src/App.js</code> and save to reload.
         </p>
