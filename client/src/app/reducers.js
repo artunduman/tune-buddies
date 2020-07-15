@@ -1,4 +1,4 @@
-import { combineReducers } from 'redux'
+import {combineReducers} from 'redux'
 
 const createRootReducer = () => combineReducers({
     router: null

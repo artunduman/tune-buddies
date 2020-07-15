@@ -1,7 +1,7 @@
 import React from 'react';
-import { keyframes } from '@emotion/core';
+import {keyframes} from '@emotion/core';
 import styled from "@emotion/styled";
-import { SpotifyButton } from "../../components/buttons";
+import {SpotifyButton} from "../../components/buttons";
 import Bunny from "./Bunnies/Bunny";
 
 const fadein = keyframes`
