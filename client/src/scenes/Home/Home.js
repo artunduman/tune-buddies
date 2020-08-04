@@ -1,7 +1,7 @@
 import React from 'react';
-import { keyframes } from '@emotion/core';
+import {keyframes} from '@emotion/core';
 import styled from "@emotion/styled";
-import { SpotifyButton } from "../../components/buttons";
+import {SpotifyButton} from "../../components/buttons";
 import Bunny from "./Bunnies/Bunny";
 
 const fadein = keyframes`
@@ -33,9 +33,9 @@ const Home = ({ onLoginButtonClicked }) => (
     <div className="Home">
         <Bunny />
         <h1>Tune Bunnies</h1>
-        <Title>Souffle up your playlists</Title>
+        <Title>Find your Super Bunny</Title>
         <Subtitle>
-            Swap out each track with another track on the same album or by the same artist.
+            Quiz your friends on your taste of music
         </Subtitle>
 
         <ButtonContainer>
