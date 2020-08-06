@@ -2,23 +2,14 @@ import React from 'react';
 import './App.css';
 import Home from "./scenes/Home/Home";
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
-
-// function App(history) {
-//   return (
-//     <div className="App">
-//       <header className="App-header">
-//         <Home onLoginButtonClicked={() => void 0} />
-//       </header>
-//     </div>
-//   );
-// }
+import {redirectToAuthorizationPage} from "./app/api";
 
 const App = () => (
     <Router>
         <div className="App">
             <Switch>
                 <Route path="/">
-                    <Home />
+                    <Home onLoginButtonClicked={_ => {redirectToAuthorizationPage()}}/>
                 </Route>
             </Switch>
         </div>
